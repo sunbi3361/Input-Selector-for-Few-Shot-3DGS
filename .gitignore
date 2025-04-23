@@ -1,0 +1,6 @@
+*.pyc
+.vscode
+output
+build
+dataset
+.idea
