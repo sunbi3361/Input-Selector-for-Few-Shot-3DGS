@@ -136,7 +136,7 @@ if __name__ == "__main__":
     num_runs = 10 # Corresponds to idx 0 through 9
     # Adjust number of processes based on your system's CPU cores and GPU availability
     # If jobs are GPU-intensive, you might be limited by the number of GPUs.
-    num_processes = 10
+    num_processes = num_runs
     
     for scene_name in scenes:
 

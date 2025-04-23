@@ -202,10 +202,10 @@ def pipeline(scene, base_path, n_views, idx):
 for scene in ['leaves',  'orchids',  'room',  'trex']:
     base_path = '/data01/sbin/workspace/ACV_25_spring/FSGS/dataset/nerf_llff_data_custom/'
     n_views = 3
-    iters = 10
-    tasks = [(scene, base_path, n_views, i) for i in range(iters)]
+    num_runs = 10
+    tasks = [(scene, base_path, n_views, i) for i in range(num_runs)]
     
-    with multiprocessing.Pool(processes=iters) as pool:
+    with multiprocessing.Pool(processes=num_runs) as pool:
         # 여러 인자를 받는 함수를 pool.map/starmap으로 실행
         results = pool.starmap(pipeline, tasks)
 
