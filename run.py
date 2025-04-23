@@ -26,10 +26,10 @@ def run_commands_for_idx(scene_name, base_source_path, base_output_path, n_views
     print(f"Model Path: {model_path}")
     print(f"Log Path: {log_file_path}")
 
-    # # Ensure output directory for the specific run exists
-    # os.makedirs(os.path.dirname(model_path), exist_ok=True) # Create output/{scene}/ if needed
-    # # Ensure model_path directory itself exists (train.py might do this, but good practice)
-    # os.makedirs(model_path, exist_ok=True)
+    # Ensure output directory for the specific run exists
+    os.makedirs(os.path.dirname(model_path), exist_ok=True) # Create output/{scene}/ if needed
+    # Ensure model_path directory itself exists (train.py might do this, but good practice)
+    os.makedirs(model_path, exist_ok=True)
 
     # Define commands
     # Note: Using f-strings for command construction. Ensure paths with spaces are handled
@@ -128,12 +128,13 @@ def run_commands_for_idx(scene_name, base_source_path, base_output_path, n_views
 
 if __name__ == "__main__":
     # --- Configuration ---
-    scenes = ['fern', 'flower', 'fortress',  'horns',  'leaves',  'orchids',  'room',  'trex'] # Scenes to process
+    # scenes = ['fern', 'flower', 'fortress',  'horns',  'leaves',  'orchids',  'room',  'trex'] # Scenes to process
+    scenes = ['fern'] # Scenes to process
     base_source_path = 'dataset/nerf_llff_data_custom'
     base_output_path = 'output'
     n_views = 3
     iteration = 10000
-    num_runs = 10 # Corresponds to idx 0 through 9
+    num_runs = 1 # Corresponds to idx 0 through 9
     # Adjust number of processes based on your system's CPU cores and GPU availability
     # If jobs are GPU-intensive, you might be limited by the number of GPUs.
     num_processes = num_runs

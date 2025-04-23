@@ -260,10 +260,10 @@ def storePly(path, xyz, rgb):
     ply_data.write(path)
 
 
-def readColmapSceneInfo(path, images, eval, n_views=0, llffhold=8, idx=0):
+def readColmapSceneInfo(path, images, eval, n_views=0,  num_runs=0, llffhold=8):
     # ply_path = os.path.join(path, "sparse/0/points3D.ply")
     # bin_path = os.path.join(path, "sparse/0/points3D.bin")
-    ply_path = os.path.join(path, str(n_views) + "_" + str(idx) + "_views/dense/fused.ply")
+    ply_path = os.path.join(path, str(n_views) + "_" + str(num_runs) + "_views/dense/fused.ply")
 
     try:
         cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.bin")
@@ -291,9 +291,18 @@ def readColmapSceneInfo(path, images, eval, n_views=0, llffhold=8, idx=0):
     cam_infos_unsorted = readColmapCameras(cam_extrinsics=cam_extrinsics, cam_intrinsics=cam_intrinsics,
                              images_folder=os.path.join(path, reading_dir),  path=path, rgb_mapping=rgb_mapping)
     cam_infos = sorted(cam_infos_unsorted.copy(), key = lambda x : x.image_name)
-
+    
+    # sbin: load randomly selected images as train set 
+    train_img_dir = os.path.join(path, str(n_views) + "_" + str(num_runs) + "_views/images/")
+    train_img_list = [
+        os.path.splitext(f)[0]
+        for f in os.listdir(train_img_dir)
+        if os.path.isfile(os.path.join(train_img_dir, f))
+    ]
+    
     if eval:
-        train_cam_infos = [c for idx, c in enumerate(cam_infos) if idx % llffhold != 0]
+        # train_cam_infos = [c for idx, c in enumerate(cam_infos) if idx % llffhold != 0]
+        train_cam_infos = [c for idx, c in enumerate(cam_infos) if c.image_name in train_img_list]
         # test_cam_infos = [c for idx, c in enumerate(cam_infos) if idx % llffhold == 0]
     else:
         train_cam_infos = cam_infos
